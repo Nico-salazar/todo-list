@@ -1,7 +1,11 @@
 interface PendingCountProps {
-    count:number
+  count: number
 }
 
 export function PendingCount({ count }: PendingCountProps) {
-    return <p>Tareas pendientes: {count}</p>
+  return (
+    <p className="pending-count" aria-live="polite" aria-atomic="true">
+      Tareas pendientes: {count}
+    </p>
+  )
 }

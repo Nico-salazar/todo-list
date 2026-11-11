@@ -1,30 +1,45 @@
 import type { Task } from '../types/task'
 
 interface TodoItemProps {
-    task:Task
-    onToggle: (taskId: string) => void
-    onDelete: (taskId: string) => void
+  task: Task
+  onToggle: (taskId: string) => void
+  onDelete: (taskId: string) => void
 }
 
-export function TodoItem({task, onToggle, onDelete}: TodoItemProps){
-    return(
-        <li>
-            <strong>{task.title}</strong>
+export function TodoItem({ task, onToggle, onDelete }: TodoItemProps) {
+  const itemClassName = task.completed
+    ? 'task-item task-item--completed'
+    : 'task-item'
+  const statusClassName = task.completed
+    ? 'task-status task-status--completed'
+    : 'task-status'
 
-        {task.description && <p>{task.description}</p>}
+  return (
+    <li className={itemClassName}>
+      <strong>{task.title}</strong>
 
-        <small>{task.completed ? 'Completada' : 'Pendiente'}</small>
+      {task.description && <p>{task.description}</p>}
 
-        <button type="button" onClick={()=> onToggle(task.id)}>
-            {task.completed ? 'Marcar como pendiente' : 'Completar'}
-        </button>
+      <small className={statusClassName}>
+        {task.completed ? 'Completada' : 'Pendiente'}
+      </small>
 
-        <button
-        type="button" onClick={() => onDelete(task.id)} 
-        aria-label={`Eliminar tarea: ${task.title}`}
->
+      <button
+        className="task-toggle"
+        type="button"
+        onClick={() => onToggle(task.id)}
+      >
+        {task.completed ? 'Marcar como pendiente' : 'Completar'}
+      </button>
+
+      <button
+        className="task-delete"
+        type="button"
+        onClick={() => onDelete(task.id)}
+        aria-label={'Eliminar tarea: ' + task.title}
+      >
         Eliminar
-        </button>
-        </li>
-    )
+      </button>
+    </li>
+  )
 }

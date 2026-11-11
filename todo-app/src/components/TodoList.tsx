@@ -9,11 +9,11 @@ interface TodoListProps {
 
 export function TodoList({ tasks, onToggle, onDelete }: TodoListProps) {
   if (tasks.length === 0) {
-    return <p>Aún no hay tareas. Agrega una para comenzar.</p>
+    return <p className="empty-state">Aún no hay tareas. Agrega una para comenzar.</p>
   }
 
   return (
-    <ul>
+    <ul className="task-list">
       {tasks.map((task) => (
         <TodoItem
           key={task.id}
