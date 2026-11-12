@@ -13,14 +13,25 @@ node --version
 npm --version
 
 
-## Instalación y ejecución
+## Instalar desde GitHub
 
-Abre Git Bash en la carpeta raíz(todo-app) del repositorio y ejecuta:
+Abre Git Bash en la carpeta donde quieras guardar el proyecto y clona el repositorio:
 
-npm install
+```bash
+git clone https://github.com/Nico-salazar/todo-list.git
+cd todo-list/todo-app
+```
+
+Instala las dependencias usando el archivo `package-lock.json` y arranca el servidor de desarrollo:
+
+```bash
+npm ci
 npm run dev
+```
 
 Vite mostrará en la terminal una dirección local, normalmente `http://localhost:5173/`. Ábrela en el navegador para usar la aplicación. Para detener el servidor, vuelve a la terminal y presiona `Ctrl+C`.
+
+Si ya clonaste el repositorio, abre Git Bash en su carpeta `todo-app` y ejecuta los dos últimos comandos (`npm ci` y `npm run dev`).
 
 ## Comandos disponibles
 
