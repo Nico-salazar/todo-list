@@ -5,9 +5,17 @@ interface TodoListProps {
   tasks: Task[]
   onToggle: (taskId: string) => void
   onDelete: (taskId: string) => void
+  expandedTaskId: string | null
+  onToggleExpand: (taskId: string) => void
 }
 
-export function TodoList({ tasks, onToggle, onDelete }: TodoListProps) {
+export function TodoList({
+  tasks,
+  onToggle,
+  onDelete,
+  expandedTaskId,
+  onToggleExpand,
+}: TodoListProps) {
   if (tasks.length === 0) {
     return <p className="empty-state">Aún no hay tareas. Agrega una para comenzar.</p>
   }
@@ -20,6 +28,8 @@ export function TodoList({ tasks, onToggle, onDelete }: TodoListProps) {
           task={task}
           onToggle={onToggle}
           onDelete={onDelete}
+          isExpanded={expandedTaskId === task.id}
+          onToggleExpand={onToggleExpand}
         />
       ))}
     </ul>

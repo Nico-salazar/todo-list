@@ -6,6 +6,7 @@ interface TodoFormProps {
   onTitleChange: (value: string) => void
   onDescriptionChange: (value: string) => void
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
+  onHide?: () => void
 }
 
 export function TodoForm({
@@ -14,6 +15,7 @@ export function TodoForm({
   onTitleChange,
   onDescriptionChange,
   onSubmit,
+  onHide,
 }: TodoFormProps) {
   return (
     <form className="todo-form" onSubmit={onSubmit}>
@@ -33,7 +35,20 @@ export function TodoForm({
         rows={3}
       />
 
-      <button type="submit">Agregar tarea</button>
+      <div className="todo-form__actions">
+        <button className="todo-form__submit" type="submit">
+          Agregar tarea
+        </button>
+        {onHide && (
+          <button
+            className="todo-form__hide"
+            type="button"
+            onClick={onHide}
+          >
+            Ocultar formulario
+          </button>
+        )}
+      </div>
     </form>
   )
 }

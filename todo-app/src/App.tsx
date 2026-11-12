@@ -3,6 +3,7 @@ import type { FormEvent } from 'react'
 import type { Task } from './types/task'
 import { TodoForm } from './components/TodoForm'
 import { PendingCount } from './components/PendingCountProps'
+import { ThemeToggle } from './components/ThemeToggle'
 import { TodoList } from './components/TodoList'
 import './App.css'
 
@@ -10,6 +11,8 @@ function App() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [isFormVisible, setIsFormVisible] = useState(true)
+  const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null)
 
   const pendingCount = tasks.filter((task) => !task.completed).length
 
@@ -53,19 +56,50 @@ function App() {
     setTasks((currentTasks) =>
       currentTasks.filter((task) => task.id !== taskId),
     )
+
+    setExpandedTaskId((currentTaskId) =>
+      currentTaskId === taskId ? null : currentTaskId,
+    )
+
+    if (tasks.length === 1) {
+      setIsFormVisible(true)
+    }
   }
+
+  function handleToggleExpandedTask(taskId: string) {
+    setExpandedTaskId((currentTaskId) =>
+      currentTaskId === taskId ? null : taskId,
+    )
+  }
+
+  const shouldShowForm = tasks.length === 0 || isFormVisible
 
   return (
     <main className="app-shell">
-      <h1>Mis tareas</h1>
+      <header className="app-heading">
+        <h1>Mis tareas</h1>
+        <ThemeToggle />
+      </header>
 
-      <TodoForm
-        title={title}
-        description={description}
-        onTitleChange={setTitle}
-        onDescriptionChange={setDescription}
-        onSubmit={handleSubmit}
-      />
+      {shouldShowForm ? (
+        <TodoForm
+          title={title}
+          description={description}
+          onTitleChange={setTitle}
+          onDescriptionChange={setDescription}
+          onSubmit={handleSubmit}
+          onHide={tasks.length > 0 ? () => setIsFormVisible(false) : undefined}
+        />
+      ) : (
+        <button
+          className="todo-form-open"
+          type="button"
+          onClick={() => setIsFormVisible(true)}
+        >
+          <span aria-hidden="true">＋</span>
+          Agregar otra tarea
+        </button>
+      )}
 
       <PendingCount count={pendingCount} />
 
@@ -73,6 +107,8 @@ function App() {
         tasks={tasks}
         onToggle={handleToggleTask}
         onDelete={handleDeleteTask}
+        expandedTaskId={expandedTaskId}
+        onToggleExpand={handleToggleExpandedTask}
       />
     </main>
   )

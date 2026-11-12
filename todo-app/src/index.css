@@ -1,21 +1,107 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color: #1f2937;
-  background: #f2f5f9;
+  --color-background: #101321;
+  --color-surface: #1b2032;
+  --color-surface-rgb: 27, 32, 50;
+  --color-text: #f3f7fa;
+  --color-muted: #a9bfcc;
+  --color-panel-border: rgba(255, 255, 255, 0.14);
+  --color-field-border: rgba(255, 255, 255, 0.2);
+  --color-empty-border: rgba(255, 255, 255, 0.25);
+  --color-field-rgb: 8, 10, 22;
+  --color-completed-text: #b1c2cd;
+  --color-dot: rgba(255, 255, 255, 0.16);
+  --color-glow-primary-opacity: 0.3;
+  --color-glow-lavender-opacity: 0.16;
+  --color-primary: #5757b8;
+  --color-primary-bright: #6868c8;
+  --color-primary-rgb: 87, 87, 184;
+  --color-lavender: #a79bff;
+  --color-lavender-rgb: 167, 155, 255;
+  --color-lavender-light: #e6e0ff;
+  --color-success: #53ad80;
+  --color-success-rgb: 83, 173, 128;
+  --color-success-light: #a8e6be;
+  --color-danger: #d9707c;
+  --color-danger-rgb: 217, 112, 124;
+  --color-danger-light: #ffe2e5;
+
+  color-scheme: dark;
+  font-family: Roboto, system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-background);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root[data-theme='light'] {
+  --color-background: #f4f6fb;
+  --color-surface: #ffffff;
+  --color-surface-rgb: 255, 255, 255;
+  --color-text: #182033;
+  --color-muted: #536176;
+  --color-panel-border: rgba(24, 32, 51, 0.14);
+  --color-field-border: rgba(24, 32, 51, 0.24);
+  --color-empty-border: rgba(24, 32, 51, 0.32);
+  --color-field-rgb: 255, 255, 255;
+  --color-completed-text: #536176;
+  --color-dot: rgba(42, 42, 80, 0.08);
+  --color-glow-primary-opacity: 0.12;
+  --color-glow-lavender-opacity: 0.12;
+  --color-primary: #4d4da6;
+  --color-primary-bright: #6262bf;
+  --color-primary-rgb: 77, 77, 166;
+  --color-lavender: #625fb3;
+  --color-lavender-rgb: 113, 105, 191;
+  --color-lavender-light: #413a78;
+  --color-success: #26734d;
+  --color-success-rgb: 38, 115, 77;
+  --color-success-light: #1e613d;
+  --color-danger: #a83d4b;
+  --color-danger-rgb: 168, 61, 75;
+  --color-danger-light: #7f2632;
+
+  color-scheme: light;
+}
+
 * {
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
-  min-width: 320px;
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
   margin: 0;
+  overflow-x: clip;
+  color: var(--color-text);
+  background:
+    radial-gradient(56.25rem 32.5rem at 18% 8%, rgba(var(--color-primary-rgb), var(--color-glow-primary-opacity)), transparent 60%),
+    radial-gradient(43.75rem 32.5rem at 88% 72%, rgba(var(--color-lavender-rgb), var(--color-glow-lavender-opacity)), transparent 60%),
+    var(--color-background);
+  transition:
+    background 0.45s ease,
+    color 0.35s ease;
+}
+
+body::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: '';
+  background-image: radial-gradient(var(--color-dot) 0.0625rem, transparent 0.08125rem);
+  background-size: 2.125rem 2.125rem;
+  transition: background-image 0.45s ease;
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 25%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 25%, transparent 75%);
 }
 
 button,
@@ -25,6 +111,6 @@ textarea {
 }
 
 :focus-visible {
-  outline: 3px solid #2563eb;
-  outline-offset: 3px;
+  outline: 2px solid var(--color-lavender);
+  outline-offset: 2px;
 }
